@@ -1,34 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-# Modified.
-# Original script source:
-# http://blog.marcbelmont.com/2012/10/script-to-extract-email-attachments.html
-# https://web.archive.org/web/20150312172727/http://blog.marcbelmont.com/2012/10/script-to-extract-email-attachments.html
-
-# Usage:
-# Run the script from a folder with file "all.mbox"
-# Attachments will be extracted into subfolder "attachments" 
-# with prefix "m " where m is a message ID in mbox file.
-
-# Or
-# ./extract_mbox_attachments.py -i first.mbox -o attachments1/
-# ./extract_mbox_attachments.py -i second.mbox -o attachments2/
-# ./extract_mbox_attachments.py --help
-
-# ---------------
-# Please check the unpacked files
-# with an antivirus before opening them!
-
-# ---------------
-# I make no representations or warranties of any kind concerning
-# the software, express, implied, statutory or otherwise,
-# including without limitation warranties of title, merchantability,
-# fitness for a particular purpose, non infringement, or the
-# absence of latent or other defects, accuracy, or the present or
-# absence of errors, whether or not discoverable, all to the
-# greatest extent permissible under applicable law.
-
 import errno
 import mailbox
 import os
