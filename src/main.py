@@ -52,7 +52,7 @@ def main():
           continue
 
     df = pd.DataFrame.from_dict(mbox_dict, orient='index')
-    df.to_json(args.output, orient = 'split', compression = 'infer', index = 'true')
+    df.to_json(args.output, orient = 'records', compression = 'infer', index = 'true')
 
 if __name__ == "__main__":
     # calling the main function
