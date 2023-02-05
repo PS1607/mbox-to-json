@@ -7,7 +7,7 @@ long_description = 'A small package that converts MBOX files to JSON. Also inclu
 
 setup(
 		name ='mbox-to-json',
-		version ='0.0.1',
+		version ='0.0.2',
 		author ='Prakhar Sharma',
 		author_email ='prakharsharma1607@gmail.com',
 		url ='https://github.com/PS1607/mbox-to-json',

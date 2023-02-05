@@ -44,14 +44,17 @@ def main():
     if args.attachments:
         # Run extract.py
         subprocess.run("python src/extract.py -i " + args.filename, shell=True)
+        print()
 
+
+    print('Initializing...')
     MBOX = args.filename
     mbox = mailbox.mbox(MBOX)
     msg_count = mbox.__len__()
 
     mbox_dict = {}
     with alive_bar(msg_count) as bar:
-        for i, msg in enumerate(mbox):
+         for i, msg in enumerate(mbox):
             mbox_dict[i] = {}
             bar()
             for header in msg.keys():

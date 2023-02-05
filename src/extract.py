@@ -5,6 +5,7 @@ import pathlib  # since Python 3.4
 import re
 import traceback
 from email.header import decode_header
+from alive_progress import alive_bar
 import argparse
 import sys
 
@@ -197,20 +198,24 @@ def process_message(extractor, mid):
 
 def extract_mbox_file(options):
     extractor = Extractor(options)
+    message_count = extractor.mbox.__len__()
     print()
-
-    for i in range(options.start, options.stop):
-        try:
-            process_message(extractor, i)
-        except KeyError:
-            print('The whole mbox file was processed.')
-            break
-        if i % 1000 == 0:
-            print('Messages processed: {}'.format(i))
+    print('Extracting Attachments...')
+    with alive_bar(message_count) as bar:
+        for i in range(options.start, options.stop):
+            try:
+                process_message(extractor, i)
+            except KeyError:
+                print('The whole mbox file was processed.')
+                break
+            bar()
 
     print()
     print('Total files:  %s' % extractor.get_total())
     print('Failed:       %s' % extractor.get_failed())
+    print()
+    print('Your files are available in the folder "mbox-to-json/attachments"')
+    print()
 
 
 if __name__ == "__main__":
