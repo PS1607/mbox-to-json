@@ -38,6 +38,12 @@ def main():
         action="store_true",
         help="Extracts Attachments from the MBOX.",
     )
+    parser.add_argument(
+        "-c",
+        "--csv",
+        action="save_as_CSV",
+        help="Saves as CSV instead of JSON",
+    )
 
     args = parser.parse_args()
 
@@ -68,7 +74,11 @@ def main():
                 continue
 
     df = pd.DataFrame.from_dict(mbox_dict, orient="index")
-    df.to_json(args.output, orient="records", index="false")
+
+    if args.csv:
+        df.to_csv(args.output, index="false")
+    else:
+        df.to_json(args.output, orient="records", index="false")
 
 
 if __name__ == "__main__":
