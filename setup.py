@@ -3,7 +3,9 @@ from setuptools import setup, find_packages
 with open('requirements.txt') as f:
 	requirements = f.readlines()
 
-long_description = 'A small package that converts MBOX files to JSON. Also includes functionality to extract attachments.'
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
 		name ='mbox-to-json',
@@ -12,8 +14,8 @@ setup(
 		author_email ='prakharsharma1607@gmail.com',
 		url ='https://github.com/PS1607/mbox-to-json',
 		description ='MBOX to JSON Converter',
-		long_description = long_description,
-		long_description_content_type ="text/markdown",
+		long_description=long_description,
+    	long_description_content_type='text/markdown',
 		license ='MIT',
 		packages = find_packages(),
 		entry_points ={
