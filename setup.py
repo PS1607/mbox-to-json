@@ -9,8 +9,8 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
 		name ='mbox-to-json',
-		version ='0.0.2',
-		author ='Prakhar Sharma',
+		version ='1.0.1',
+		author ='Prakhar Sharma, Adrita Bhattacharya',
 		author_email ='prakharsharma1607@gmail.com',
 		url ='https://github.com/PS1607/mbox-to-json',
 		description ='MBOX to JSON Converter',

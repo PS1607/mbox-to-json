@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import mailbox
 import argparse
@@ -41,15 +42,17 @@ def main():
     parser.add_argument(
         "-c",
         "--csv",
-        action="save_as_CSV",
+        action="store_true",
         help="Saves as CSV instead of JSON",
     )
 
     args = parser.parse_args()
-
+    if (args.output == 'file.json'):
+        args.output = os.path.splitext(args.filename)[0] + '.json'
     if args.attachments:
         # Run extract.py
-        subprocess.run("python src/extract.py -i " + args.filename, shell=True)
+        output_directory = os.path.join(os.path.dirname(args.output),'attachments','') 
+        subprocess.run("python src/extract.py -i " + args.filename + " -o " + output_directory, shell=True)
         print()
 
 

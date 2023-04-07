@@ -46,7 +46,7 @@ class Extractor:
 
         if not os.path.exists(options.output):
             os.makedirs(options.output)
-
+ 
         self.inline_image_folder = os.path.join(options.output, 'inline_images/')
         if (not options.no_inline_images) and (not os.path.exists(self.inline_image_folder)):
             os.makedirs(self.inline_image_folder)
@@ -214,7 +214,7 @@ def extract_mbox_file(options):
     print('Total files:  %s' % extractor.get_total())
     print('Failed:       %s' % extractor.get_failed())
     print()
-    print('Your files are available in the folder "mbox-to-json/attachments"')
+    print('Your files are available in the folder ' + options.output)
     print()
 
 
