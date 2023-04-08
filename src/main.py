@@ -54,8 +54,9 @@ def main():
 
     if args.attachments:
         # Run extract.py
-        output_directory = os.path.join(os.path.dirname(args.output),'attachments','') 
-        subprocess.run("python src/extract.py -i " + args.filename + " -o " + output_directory, shell=True)
+        output_directory = os.path.join(os.path.dirname(args.output),'attachments','')
+        extract = os.path.dirname(__file__) + "/extract.py"
+        subprocess.run("python " + extract + " -i " + args.filename + " -o " + output_directory, shell=True)
         print()
 
 
