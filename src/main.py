@@ -30,25 +30,28 @@ def main():
         "-o",
         "--output",
         required=False,
-        default="file.json",
         help="Output JSON file path and name. Defaults to same location and name as input file.",
     )
     parser.add_argument(
         "-a",
         "--attachments",
         action="store_true",
-        help="Extracts Attachments from the MBOX.",
+        help='Extracts Attachments from the MBOX. Stored to the same location as input file in a folder "attachments"',
     )
     parser.add_argument(
         "-c",
         "--csv",
         action="store_true",
-        help="Saves as CSV instead of JSON",
+        help="Saves as CSV instead of JSON. Defaults to same location and name as input file.",
     )
 
     args = parser.parse_args()
-    if (args.output == 'file.json'):
-        args.output = os.path.splitext(args.filename)[0] + '.json'
+    if (args.output is None):
+        if args.csv:
+            args.output = os.path.splitext(args.filename)[0] + '.csv'
+        else:
+            args.output = os.path.splitext(args.filename)[0] + '.json'
+
     if args.attachments:
         # Run extract.py
         output_directory = os.path.join(os.path.dirname(args.output),'attachments','') 
