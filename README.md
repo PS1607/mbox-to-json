@@ -1,4 +1,4 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://github1s.com/PS1607/mbox-to-json)
+[![Open in Visual Studio Code](https://camo.githubusercontent.com/5cf0e57d39fcba2c6db6323c5a38febeef0dbf230a1207efa846063cdf9dbeff/68747470733a2f2f636c617373726f6f6d2e6769746875622e636f6d2f6173736574732f6f70656e2d696e2d7673636f64652d633636363438616637656233666538626334663239343534366266643836656634373337383063646531646561343837643363346666333534393433633961652e737667)](https://github1s.com/PS1607/mbox-to-json)
 
 <div id="top"></div>
 <!--
@@ -38,7 +38,7 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<details>
+<details open>
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -61,6 +61,7 @@
   </ol>
 </details>
 
+<br>
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
@@ -79,18 +80,28 @@ A small package that converts MBOX files to JSON. Also includes functionality to
 
 ## Getting Started
 
-To run this tool on your system locally, follow the installation steps.
+There are 2 ways to install this tool.<br><br>
 
 ### Prerequisites
 
-Make sure you upgrade `pip` before moving on.
+Make sure you upgrade `pip` before moving on.<br>
 All the required dependencies are in [`requirements.txt`](https://github.com/PS1607/mbox-to-json/blob/main/requirements.txt) which would be installed at the time of running the setup.
 
 ```sh
 pip install --upgrade pip
 ```
 
-### Installation
+<br>
+
+### 1. Install from [PyPI](https://pypi.org/project/mbox-to-json/)
+
+```sh
+pip install mbox-to-json
+```
+
+<br>
+
+### 2. Install from GitHub
 
 1. Download the repository as zip. Unzip.
 2. `cd` to the repository folder
@@ -106,33 +117,36 @@ pip install --upgrade pip
 
 ## Usage
 
-```sh
-mbox-to-json -h
-```
+- Help Function
 
-Usage example#1
+  ```sh
+  mbox-to-json -h
+  ```
 
-```sh
-mbox-to-json /Users/prakhar/downloads/random_file.mbox
-```
+- Most basic conversion from MBOX to JSON. Just provide the file path. Output JSON file would be in the same location as the input file.
 
-<br>---> Use `-a` flag to extract attachments. The files would be available in an _**attachments**_ folder in the root location of the repo.<br>
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox
+  ```
 
-Usage example#2
+- Use **`-a`** flag to extract attachments. The files would be available in **`input_file_directory/attachments`**
 
-```sh
-mbox-to-json /Users/prakhar/downloads/random_file.mbox -a
-```
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox -a
+  ```
 
-<br>---> Use `-o` to specify the output file location. It defaults to `file.json` in the root location of the repo.<br>
+- Use **`-c`** flag to convert to CSV insted of JSON. Output CSV file would be in the same location as the input file.
 
-Usage example#3
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox -c
+  ```
 
-```sh
-mbox-to-json /Users/prakhar/downloads/random_file.mbox -o /Users/prakhar/downloads/random_output.json
-```
+- Use **`-o`** to specify the output file location. Make sure to provide the file name too, with the extension JSON (or CSV)
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox -o /Users/prakhar/downloads/random_output.json
+  ```
 
-_For more examples, please refer to the [Documentation](https://doesnotexist.com)_
+_For more examples, please refer to the [Documentation](https://pypi.org/project/mbox-to-json/)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -158,9 +172,9 @@ Distributed under the MIT License. See [`LICENSE.txt`](https://github.com/PS1607
 
 LinkedIn - [Prakhar Sharma](https://www.linkedin.com/in/prakhar-sharma-2020/), [Adrita Bhattacharya](https://www.linkedin.com/in/adrita-bhattacharya-6bab581a9/)
 
-Github: [PS1607](https://github.com/PS1607), [adritabhattacharya](https://github.com/adritabhattacharya)
+Github - [PS1607](https://github.com/PS1607), [adritabhattacharya](https://github.com/adritabhattacharya)
 
-Google Developer: [PS1607](https://g.dev/ps1607)
+Google Developer - [PS1607](https://g.dev/ps1607)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
