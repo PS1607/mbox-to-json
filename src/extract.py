@@ -126,17 +126,21 @@ def write_to_disk(part, file_path):
 
 def save(extractor, mid, part, attachments_counter, inline_image=False):
     extractor.increment_total()
+    msg = extractor.mbox.get_message(mid)
+    message_id = msg['Message-ID'].rsplit('@', 1)[0][1:]
 
     try:
         if inline_image:
             attachments_counter['inline_image'] += 1
             attachment_number_string = 'ii' + str(attachments_counter['inline_image'])
-            destination_folder = extractor.inline_image_folder
+            destination_folder = os.path.join(extractor.inline_image_folder, message_id)
         else:
             attachments_counter['value'] += 1
             attachment_number_string = str(attachments_counter['value'])
-            destination_folder = extractor.options.output
+            destination_folder = os.path.join(extractor.options.output, message_id)
 
+        if not os.path.exists(destination_folder):
+            os.makedirs(destination_folder)
         filename = decode_filename(part, attachment_number_string, mid)
         filename = filter_fn_characters(filename)
         filename = '%s %s' % (mid, filename)
