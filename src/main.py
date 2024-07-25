@@ -4,6 +4,7 @@ import mailbox
 import argparse
 import subprocess
 from alive_progress import alive_bar
+from email.header import decode_header
 
 
 def getcharsets(msg):
@@ -14,12 +15,39 @@ def getcharsets(msg):
     return charsets
 
 
+def decode_encoded(encoded, encoding=None):
+    if encoding is None:
+        return encoded.decode()
+
+    decoded = ""
+    try:
+        decoded = encoded.decode(encoding)
+    except:
+        if encoding == "iso2022_jp":
+            decoded = encoded.decode("cp932")
+    return decoded
+
+
+def getHeader(msg, header):
+    decoded_header = decode_header(msg[header])
+
+    joined_header = ""
+    for part in decoded_header:
+        encoded = part[0]
+        encoding = part[1]
+        if isinstance(encoded, str):
+            joined_header += encoded
+        else:
+            joined_header += decode_encoded(encoded, encoding=encoding)
+    return joined_header
+
+
 def getBody(msg):
     while msg.is_multipart():
         msg = msg.get_payload()[0]
     t = msg.get_payload(decode=True)
     for charset in getcharsets(msg):
-        t = t.decode(charset)
+        t = decode_encoded(t, encoding=charset)
     return t
 
 
@@ -71,7 +99,7 @@ def main():
             mbox_dict[i] = {}
             bar()
             for header in msg.keys():
-                mbox_dict[i][header] = msg[header]
+                mbox_dict[i][header] = getHeader(msg, header)
             try:
                 mbox_dict[i]["Body"] = getBody(msg)
             except Exception as e:
