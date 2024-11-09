@@ -1,0 +1,12 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore environment files
+.env
+
+# Ignore specific directories and files
+/node_modules/
+/build/
+/dist/
+/mbox_to_json.egg-info/
