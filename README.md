@@ -66,7 +66,15 @@
 
 ## About The Project
 
-A small package that converts MBOX files to JSON. Also includes functionality to extract attachments.
+A small package that converts MBOX files to JSON. Also includes functionality to extract attachments with complete traceability.
+
+**✨ Key Features:**
+- 📧 Convert MBOX to JSON or CSV format
+- 📎 Extract attachments with metadata tracking
+- 🔗 Cross-reference attachments to source emails  
+- 📊 Split large outputs into manageable chunks
+- 🛡️ Robust error handling and logging
+- ⚡ Modern Python packaging with flexible dependencies
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -135,10 +143,52 @@ pip install mbox-to-json
   mbox-to-json /Users/prakhar/downloads/random_file.mbox -a
   ```
 
-- Use **`-c`** flag to convert to CSV insted of JSON. Output CSV file would be in the same location as the input file.
+- Use **`-a --skip-attachment-metadata`** to extract attachments but keep JSON/CSV output clean (without attachment metadata)
+
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox -a --skip-attachment-metadata
+  ```
+
+- Use **`-c`** flag to convert to CSV instead of JSON. Output CSV file would be in the same location as the input file.
 
   ```sh
   mbox-to-json /Users/prakhar/downloads/random_file.mbox -c
+  ```
+
+- Use **`-s`** to split large output into multiple files
+
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox -s 3
+  ```
+
+- Use **`--max-payload-size`** to set maximum email payload size in MB (default: 10MB)
+
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox --max-payload-size 50
+  ```
+
+- Use **`--max-body-part-size`** to set maximum body part size in MB (default: 1MB)
+
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox --max-body-part-size 5
+  ```
+
+- Use **`--max-recursion-depth`** to set maximum recursion depth for nested emails (default: 50)
+
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox --max-recursion-depth 100
+  ```
+
+- Use **`--workers`** to set number of parallel workers (default: 1, automatically limited by CPU cores)
+
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox --workers 4
+  ```
+
+- Use **`--enable-parallel`** to force parallel processing regardless of file size or message count
+
+  ```sh
+  mbox-to-json /Users/prakhar/downloads/random_file.mbox --workers 4 --enable-parallel
   ```
 
 - Use **`-o`** to specify the output file location. Make sure to provide the file name too, with the extension JSON (or CSV)
@@ -147,6 +197,52 @@ pip install mbox-to-json
   ```
 
 _For more examples, please refer to the [Documentation](https://pypi.org/project/mbox-to-json/)_
+
+### Output Files
+
+When using the `-a` flag, mbox-to-json creates several output files for complete attachment tracking:
+
+- **Main output file** (JSON/CSV): Contains email data with attachment metadata (unless `--skip-attachment-metadata` is used)
+- **`*_attachments_manifest.json`**: Complete inventory of all attachments with source email references
+- **`attachments/`** folder: Contains extracted attachment files
+- **Individual `.metadata.json` files**: Detailed metadata for each extracted attachment
+- **`extraction_map.json`**: Complete mapping of attachments to source emails
+
+### Memory Optimization for Large Files
+
+For large MBOX files that may cause memory issues or recursion errors, you can adjust processing parameters:
+
+```sh
+# For very large files - increase payload limits and reduce batch size
+mbox-to-json large_inbox.mbox --max-payload-size 50 --batch-size 500
+
+# For systems with limited memory - reduce limits
+mbox-to-json inbox.mbox --max-payload-size 5 --max-body-part-size 0.5 --batch-size 2000
+
+# For deeply nested email threads - increase recursion depth
+mbox-to-json complex_threads.mbox --max-recursion-depth 100
+
+# Use parallel processing for faster performance (automatically uses available CPU cores)
+mbox-to-json large_inbox.mbox --workers 4 --batch-size 500
+
+# Force parallel processing for smaller files that don't meet automatic thresholds
+mbox-to-json medium_inbox.mbox --workers 4 --enable-parallel
+
+# Disable parallel processing entirely (use serial processing)
+mbox-to-json any_inbox.mbox --workers 1
+
+# Combine options for optimal performance with parallel processing
+mbox-to-json inbox.mbox -a -c --workers 8 --enable-parallel --max-payload-size 20 --batch-size 250 -o output.csv
+```
+
+### Performance Tips
+
+- **Intelligent Parallel Processing**: Automatically enabled for files ≥200MB with ≥1000 messages
+- **Force Parallel Processing**: Use `--enable-parallel` to override automatic decision for any file size
+- **Worker Optimization**: Set `--workers` to match your CPU core count for maximum performance
+- **Memory Management**: Adjust `--batch-size` based on available RAM (lower for limited memory)
+- **Large Files**: Increase `--max-payload-size` for files with large attachments
+- **Processing Mode**: Tool will log why parallel/serial processing was chosen
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
