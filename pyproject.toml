@@ -1,0 +1,95 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mbox-to-json"
+version = "2.0.0"
+description = "MBOX to JSON Converter with attachment extraction and cross-referencing"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Prakhar Sharma", email = "prakharsharma1607@gmail.com"},
+    {name = "Adrita Bhattacharya"}
+]
+maintainers = [
+    {name = "Prakhar Sharma", email = "prakharsharma1607@gmail.com"}
+]
+keywords = ["mbox", "json", "email", "converter", "attachment", "extraction"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications :: Email",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "alive_progress>=3.1.0",
+    "pandas>=2.0.0",
+    "charset-normalizer>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=22.0.0",
+    "flake8>=4.0.0",
+    "mypy>=0.900",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/PS1607/mbox-to-json"
+Repository = "https://github.com/PS1607/mbox-to-json.git"
+"Bug Reports" = "https://github.com/PS1607/mbox-to-json/issues"
+"Source Code" = "https://github.com/PS1607/mbox-to-json"
+
+[project.scripts]
+mbox-to-json = "src.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--strict-markers --strict-config --verbose"

@@ -1,0 +1,37 @@
+name: Create Release Branch
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create-release-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Create release branch
+      run: |
+        # Get the release tag name
+        RELEASE_TAG="${{ github.event.release.tag_name }}"
+        BRANCH_NAME="release/${RELEASE_TAG}"
+        
+        # Create and push the release branch
+        git checkout -b "${BRANCH_NAME}"
+        git push origin "${BRANCH_NAME}"
+        
+        echo "Created release branch: ${BRANCH_NAME}"
+        echo "Branch created from commit: $(git rev-parse HEAD)"
+    
+    - name: Update release notes
+      run: |
+        RELEASE_TAG="${{ github.event.release.tag_name }}"
+        BRANCH_NAME="release/${RELEASE_TAG}"
+        
+        echo "::notice title=Release Branch Created::Branch '${BRANCH_NAME}' has been created for release ${RELEASE_TAG}"
