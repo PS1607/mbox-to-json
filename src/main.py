@@ -429,7 +429,18 @@ def main():
         logger.info(f"Found {msg_count} messages in MBOX file")
         
         if msg_count == 0:
-            logger.warning("MBOX file contains no messages")
+            logger.warning("MBOX file contains no messages; writing empty output")
+            try:
+                if args.csv:
+                    pd.DataFrame().to_csv(args.output, index=False)
+                else:
+                    pd.DataFrame().to_json(
+                        args.output, orient="records", index=False, force_ascii=False
+                    )
+                logger.info(f"Successfully saved output to: {args.output}")
+            except Exception as e:
+                logger.error(f"Failed to save output file {args.output}: {e}")
+                sys.exit(1)
             return
             
     except Exception as e:
